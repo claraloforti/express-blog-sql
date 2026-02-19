@@ -124,25 +124,17 @@ function modify(req, res) {
 // DELETE rimuovo la ricetta
 function destroy(req, res) {
 
-    // Cerco ricetta tramite ID
-    const ricetta = recipesList.find(pizza => pizza.id === parseInt(req.params.id));
+    // Recupero l'ID dall'URL
+    const id = parseInt(req.params.id)
 
-    if (!ricetta) {
-        res.status(404);
+    const sql = 'DELETE FROM posts WHERE id = ?';
 
-        return res.json({
-            status: 404,
-            error: "Not Found",
-            message: "Pizza non trovata"
-        })
-    }
+    // Elimino la ricetta                   
+    connection.query(sql, [id], (err) => {
+        if (err) return res.status(500).json({ error: 'Failed to delete post' });
+        res.sendStatus(204)
+    });
 
-    // Rimuovo ricetta dalla lista
-    // Elimino il primo elemento a partire dall'indice
-    recipesList.splice(recipesList.indexOf(ricetta), 1);
-
-    // Forzo status No Content
-    res.sendStatus(204)
 }
 
 // Esporto le funzioni del controller per poterle usare in router
