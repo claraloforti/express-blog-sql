@@ -3,27 +3,27 @@ const express = require('express')
 // Creo istanza dell'oggetto rotte di Express
 const router = express.Router();
 
-// Import del controller delle ricette
-const recipeController = require('./../controllers/recipeController');
+// Import del controller dei post
+const postController = require('./../controllers/postController');
 
 // Rotte di CRUD
 // Index
-router.get('/', recipeController.index);
+router.get('/', postController.index);
 
 // Show
-router.get('/:id', recipeController.show);
+router.get('/:id', postController.show);
 
 // Store
-router.post('/', recipeController.store);
+router.post('/', postController.store);
 
 // Update
-router.put('/:id', recipeController.update);
+router.put('/:id', postController.update);
 
 // Modify
-router.patch('/:id', recipeController.modify);
+router.patch('/:id', postController.modify);
 
 // Destroy
-router.delete('/:id', recipeController.destroy);
+router.delete('/:id', postController.destroy);
 
 // Esporto l'istanza delle rotte
 module.exports = router;

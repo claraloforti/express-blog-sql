@@ -8,7 +8,7 @@ const errorsHandler = require("./middlewares/errorsHandler");
 const notFound = require("./middlewares/notFound");
 
 // Importo router delle ricette
-const recipesRouter = require('./routers/recipes');
+const postsRouter = require('./routers/recipes');
 
 // Attivo cartella public per uso file statici
 app.use(express.static('public'));
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 })
 
 // Istanza delle rotte per risorsa ricette
-app.use("/ricette", recipesRouter)
+app.use("/posts", postsRouter)
 
 // Registro middlewares di gestione errori 404 e 500
 app.use(errorsHandler);
