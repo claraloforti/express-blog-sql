@@ -1,7 +1,5 @@
 // Importo il file di connessione al database
 const connection = require('../data/db');
-// Importo dati dei post
-const postsList = require('../data/posts');
 
 
 // GET 
@@ -38,7 +36,7 @@ function show(req, res) {
         // Recupero il post
         const post = results[0];
 
-        // faccio partire la seconda query di join se la prima ha avuto successo
+        // Faccio partire la seconda query di join se la prima ha avuto successo
         connection.query(tagsSql, [id], (err, tagsResults) => {
             if (err) return res.status(500).json({ error: 'Database query failed' });
 
@@ -53,79 +51,18 @@ function show(req, res) {
 
 // POST creo nuovo post
 function store(req, res) {
-    const newId = Date.now();
-
-    // Creo nuovo oggetto post
-    const newPost = {
-        id: newId,
-        title: req.body.title,
-        image: req.body.image,
-        tags: req.body.tags,
-    }
-
-    // Aggiungo il nuovo post alla lista
-    recipesList.push(newPost);
 
 
-    // Restituisco status Created e il nuovo post
-    res.status(201);
-    res.json(newPost);
 }
 
 
 // PUT modifica integrale del post
 function update(req, res) {
-    const post = postsList.find(post =>
-        post.id === parseInt(req.params.id)
-    )
-
-    if (!post) {
-        res.status(404);
-
-        return res.json({
-            error: "Not Found",
-            message: "Post non trovato"
-        })
-    }
-
-    // Aggiorno post
-    post.title = req.body.title;
-    post.image = req.body.image;
-    post.tags = req.body.tags;
-
-    res.json(post);
 }
 
 
 // PATCH modifica parziale del post
 function modify(req, res) {
-    const post = postsList.find(post =>
-        post.id === parseInt(req.params.id)
-    )
-
-    if (!post) {
-        res.status(404);
-
-        return res.json({
-            error: "Not Found",
-            message: "Post non trovato"
-        })
-    }
-
-    /* Aggiorno post iterando sulle proprietà
-    const properties = ['title', 'image', 'content', 'tags']
-    properties.forEach(propertie => {
-        if (req.body[propertie]) { // Se nella richiesta c'è quel campo
-            post[propertie] = req.body[propertie]; // sostituiscilo con quello presente
-        }
-    })*/
-
-    // Altro modo che evita di creare l'array di proprietà
-    for (let key in req.body) {
-        post[key] = req.body[key];
-    }
-
-    res.json(post);
 }
 
 
